@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://owu.linkpc.net:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@cluster0.wpqyclm.mongodb.net" uuid="d32adf40-7d22-4b06-90d9-6d1a5dd76f95">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb+srv://cluster0.wpqyclm.mongodb.net</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
