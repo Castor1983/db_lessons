@@ -6,27 +6,32 @@ db.students.find()
 db.students.aggregate({
     $match: {
         avgScore: {$eq: 4.2}
-    }});
+    }
+});
 //2) Знайди всіх дітей з 1 класу
 db.students.aggregate({
     $match: {
         class: {$eq: 1}
-    }});
+    }
+});
 //3) Знайти всіх дітей які вивчають фізику
 db.students.aggregate({
     $match: {
         lessons: 'physics'
-    }});
+    }
+});
 //4) Знайти всіх дітей, батьки яких працюють в науці ( scientist )
 db.students.aggregate({
     $match: {
         "parents.profession": 'scientist'
-    }});
+    }
+});
 //5) Знайти дітей, в яких середня оцінка більша за 4
 db.students.aggregate({
     $match: {
         avgScore: {$gt: 4}
-    }});
+    }
+});
 //6) Знайти найкращого учня
 db.students.aggregate([{
     $sort: {avgScore: -1}
@@ -57,8 +62,8 @@ db.students.aggregate([{
 }])
 //10) Знайти середній бал дітей які вивчають математику або фізику
 db.students.aggregate([{
-    $match:{
-        $or:[{
+    $match: {
+        $or: [{
             lessons: 'mathematics'
         },
             {
@@ -70,7 +75,7 @@ db.students.aggregate([{
     {
         $group: {
             _id: 'avgMathPhys',
-            avgScore:{
+            avgScore: {
                 $avg: '$avgScore'
             }
         }
@@ -78,32 +83,32 @@ db.students.aggregate([{
 ])
 //11) Знайти середній бал по 2 класі
 db.students.aggregate([{
-    $group:{
+    $match: {
+        class: 2
+    }
+}, {
+    $group: {
         _id: '$class',
-avgScore: {$avg:'$avgScore'}
+        avgScore: {$avg: '$avgScore'}
     }
 }, {
     $sort: {_id: 1}
 },
     {
-        $addFields:{
-            Class:'$_id'
+        $addFields: {
+            Class: '$_id'
         }
     },
     {
-        $project:{
-            _id:0
-        }},
-    {
-        $limit: 2
+        $project: {
+            _id: 0
+        }
     },
-    {
-        $skip : 1
-    }])
+])
 //12) Знайти дітей з не повною сім'єю
 db.students.aggregate({
     $match:
-    {parents: {$size: 1}}
+        {parents: {$size: 1}}
 })
 //13) Знайти батьків які не працюють
 db.students.aggregate({
@@ -119,7 +124,8 @@ db.students.updateMany({
     'parents.profession': 'teacher'
 },
 
-    {$set:{avgScore: 5}
+    {
+        $set: {avgScore: 5}
     })
 //16) Знайти дітей які вчаться в початковій школі (до 5 класу) і вивчають фізику ( physics )
 db.students.aggregate({
@@ -128,15 +134,17 @@ db.students.aggregate({
             {
                 lessons: 'physics'
             }]
-    }})
+    }
+})
 //17) Знайти найуспішніший клас
 db.students.aggregate([{
     $group: {
         _id: '$class',
-        bestScore:{$avg: '$avgScore'}
-    }},
+        bestScore: {$avg: '$avgScore'}
+    }
+},
     {
-        $sort:{
+        $sort: {
             bestScore: -1
         }
     },
@@ -144,12 +152,12 @@ db.students.aggregate([{
         $limit: 1
     },
     {
-        $addFields:{
-            Class:'$_id'
+        $addFields: {
+            Class: '$_id'
         }
     },
     {
-        $project:{
-            _id:0
+        $project: {
+            _id: 0
         }
-}])
+    }])
